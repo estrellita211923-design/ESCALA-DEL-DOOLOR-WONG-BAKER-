@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escala de Wong-Baker - Edición Acuática</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+    
+    body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* EFECTO DE AGUA EN MOVIMIENTO */
+      background: linear-gradient(270deg, #dcf8ff, #7dd3fc, #dcf8ff);
+      background-size: 600% 600%;
+      -webkit-animation: WaterFlow 20s ease infinite;
+      -moz-animation: WaterFlow 20s ease infinite;
+      animation: WaterFlow 20s ease infinite;
+    }
+
+    /* Animación del fondo de agua */
+    @-webkit-keyframes WaterFlow {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @-moz-keyframes WaterFlow {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    @keyframes WaterFlow {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+
+    /* Estilo para la tarjeta principal (más grande y más arriba) */
+    .main-card {
+      width: 90%; /* Más ancha (90% del ancho) */
+      max-width: 1300px; /* Ancho máximo más grande */
+      min-height: 80vh; /* Más alta */
+      background-color: rgba(255, 255, 255, 0.9); /* Blanco semitransparente */
+      backdrop-filter: blur(8px); /* Efecto de desenfoque de fondo */
+      border-radius: 3rem; /* Bordes más redondeados */
+      padding: 4rem; /* Más espacio interior */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      margin-top: 5vh; /* Se mueve hacia arriba (no centrado verticalmente) */
+      margin-bottom: 5vh;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    /* Estilos existentes para las tarjetas de escala */
+    .card-scale {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .card-scale:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    .card-selected {
+      transform: translateY(-10px) scale(1.05) !important;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    }
+    .face-shadow {
+      filter: drop-shadow(0px 6px 8px rgba(0,0,0,0.15));
+    }
+  </style>
+</head>
+<body class="py-8 px-4 flex flex-col items-center">
+
+  <div class="main-card flex flex-col justify-between">
+    
+    <!-- Encabezado (ahora más integrado) -->
+    <div class="text-center mb-10">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-sky-600 tracking-wide uppercase drop-shadow-sm">
+        Escala Visual o de Wong-Baker
+      </h1>
+      <p class="text-slate-500 mt-3 text-lg md:text-xl">
+        Selecciona el nivel de dolor que manifiesta el paciente
+      </p>
+    </div>
+
+    <!-- Contenedor de la Escala (reutilizado) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 mb-12">
+      
+      <!-- Nivel 0 -->
+      <div onclick="selectPain(0)" id="card-0" class="card-scale cursor-pointer bg-sky-100 hover:bg-sky-200 border-4 border-sky-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#38bdf8"/>
+            <path d="M 30 42 Q 38 32 46 42" stroke="#0369a1" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M 54 42 Q 62 32 70 42" stroke="#0369a1" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M 28 58 Q 50 82 72 58" stroke="#0369a1" stroke-width="5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-sky-400 text-white font-bold text-3xl mb-3 shadow-inner">0</button>
+        <span class="font-bold text-sky-900 text-xl text-center leading-tight">No duele</span>
+      </div>
+
+      <!-- Nivel 1 -->
+      <div onclick="selectPain(1)" id="card-1" class="card-scale cursor-pointer bg-emerald-100 hover:bg-emerald-200 border-4 border-emerald-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#34d399"/>
+            <path d="M 30 42 Q 38 34 46 42" stroke="#065f46" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M 54 42 Q 62 34 70 42" stroke="#065f46" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M 32 60 Q 50 78 68 60" stroke="#065f46" stroke-width="5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-emerald-400 text-white font-bold text-3xl mb-3 shadow-inner">1</button>
+        <span class="font-bold text-emerald-900 text-xl text-center leading-tight">Duele poco</span>
+      </div>
+
+      <!-- Nivel 2 -->
+      <div onclick="selectPain(2)" id="card-2" class="card-scale cursor-pointer bg-lime-100 hover:bg-lime-200 border-4 border-lime-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#a3e635"/>
+            <circle cx="36" cy="40" r="5" fill="#3f6212"/>
+            <circle cx="64" cy="40" r="5" fill="#3f6212"/>
+            <line x1="28" y1="32" x2="44" y2="32" stroke="#3f6212" stroke-width="4" stroke-linecap="round"/>
+            <line x1="56" y1="32" x2="72" y2="32" stroke="#3f6212" stroke-width="4" stroke-linecap="round"/>
+            <line x1="32" y1="65" x2="68" y2="65" stroke="#3f6212" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-lime-400 text-white font-bold text-3xl mb-3 shadow-inner">2</button>
+        <span class="font-bold text-lime-900 text-xl text-center leading-tight">Duele bastante</span>
+      </div>
+
+      <!-- Nivel 3 -->
+      <div onclick="selectPain(3)" id="card-3" class="card-scale cursor-pointer bg-yellow-100 hover:bg-yellow-200 border-4 border-yellow-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#facc15"/>
+            <circle cx="36" cy="42" r="5" fill="#854d0e"/>
+            <circle cx="64" cy="42" r="5" fill="#854d0e"/>
+            <line x1="28" y1="32" x2="44" y2="37" stroke="#854d0e" stroke-width="4" stroke-linecap="round"/>
+            <line x1="72" y1="32" x2="56" y2="37" stroke="#854d0e" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 32 68 Q 50 54 68 68" stroke="#854d0e" stroke-width="5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-yellow-400 text-white font-bold text-3xl mb-3 shadow-inner">3</button>
+        <span class="font-bold text-yellow-900 text-xl text-center leading-tight">Duele más</span>
+      </div>
+
+      <!-- Nivel 4 -->
+      <div onclick="selectPain(4)" id="card-4" class="card-scale cursor-pointer bg-orange-100 hover:bg-orange-200 border-4 border-orange-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#fb923c"/>
+            <circle cx="36" cy="44" r="5" fill="#9a3412"/>
+            <circle cx="64" cy="44" r="5" fill="#9a3412"/>
+            <line x1="26" y1="30" x2="44" y2="38" stroke="#9a3412" stroke-width="4" stroke-linecap="round"/>
+            <line x1="74" y1="30" x2="56" y2="38" stroke="#9a3412" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 30 68 Q 40 60 50 68 T 70 68" stroke="#9a3412" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M 28 50 Q 25 58 28 62 Q 31 58 28 50" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-orange-400 text-white font-bold text-3xl mb-3 shadow-inner">4</button>
+        <span class="font-bold text-orange-900 text-xl text-center leading-tight">Duele mucho</span>
+      </div>
+
+      <!-- Nivel 5 -->
+      <div onclick="selectPain(5)" id="card-5" class="card-scale cursor-pointer bg-rose-100 hover:bg-rose-200 border-4 border-rose-300 rounded-3xl p-6 flex flex-col items-center justify-between shadow-md relative overflow-hidden">
+        <div class="w-28 h-28 my-3 face-shadow">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="45" fill="#f87171"/>
+            <circle cx="36" cy="42" r="6" fill="#991b1b"/>
+            <circle cx="64" cy="42" r="6" fill="#991b1b"/>
+            <line x1="24" y1="28" x2="44" y2="38" stroke="#991b1b" stroke-width="5" stroke-linecap="round"/>
+            <line x1="76" y1="28" x2="56" y2="38" stroke="#991b1b" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="50" cy="68" rx="14" ry="10" fill="#991b1b"/>
+            <path d="M 26 48 Q 22 58 26 62 Q 30 58 26 48" fill="#38bdf8"/>
+            <path d="M 74 48 Q 70 58 74 62 Q 78 58 74 48" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <button class="w-14 h-14 rounded-full bg-rose-500 text-white font-bold text-3xl mb-3 shadow-inner">5</button>
+        <span class="font-bold text-rose-900 text-xl text-center leading-tight">Dolor muy fuerte</span>
+      </div>
+
+    </div>
+
+    <!-- Panel de Evaluación (reutilizado pero con más espacio) -->
+    <div id="evaluation-panel" class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-8 flex-grow transition-all duration-300 flex flex-col justify-center">
+      <div class="flex items-center gap-4 mb-3">
+        <span class="inline-block w-5 h-5 rounded-full bg-slate-400" id="status-dot"></span>
+        <h2 class="text-2xl font-bold text-slate-700" id="eval-title">Selecciona un nivel de dolor</h2>
+      </div>
+      <p class="text-slate-600 text-xl" id="eval-description">
+        Haz clic en cualquiera de las caritas o números para registrar el dolor del paciente y ver el reporte.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Pie de página integrado con el nuevo diseño -->
+  <footer class="text-center text-slate-600 font-medium py-3 px-8 rounded-full bg-white/70 backdrop-blur-sm shadow-inner mb-6">
+    Desarrollado por <span class="font-bold text-sky-600">Sandra Estrellita Mosso Bruno</span>
+  </footer>
+
+  <script>
+    const data = {
+      0: {
+        title: "Nivel 0: No duele",
+        description: "El paciente no muestra ninguna molestia ni dolor. Se encuentra completamente tranquilo, sonriente y cómodo.",
+        color: "bg-sky-500",
+        bgPanel: "bg-sky-50 border-sky-300"
+      },
+      1: {
+        title: "Nivel 1: Duele un poco",
+        description: "El paciente expresa que solo le duele un poquito. El dolor es leve, casi imperceptible y no interfiere con sus actividades cotidianas.",
+        color: "bg-emerald-500",
+        bgPanel: "bg-emerald-50 border-emerald-300"
+      },
+      2: {
+        title: "Nivel 2: Duele bastante",
+        description: "El paciente manifiesta un dolor un poco más perceptible. Le molesta de forma constante, pero aún puede tolerarlo y realizar algunas actividades.",
+        color: "bg-lime-500",
+        bgPanel: "bg-lime-50 border-lime-300"
+      },
+      3: {
+        title: "Nivel 3: Duele más",
+        description: "El paciente indica un dolor moderado-intenso. La molestia es clara, comienza a distraerlo y le cuesta trabajo concentrarse o estar tranquilo.",
+        color: "bg-yellow-500",
+        bgPanel: "bg-yellow-50 border-yellow-300"
+      },
+      4: {
+        title: "Nivel 4: Duele mucho",
+        description: "El paciente presenta un dolor intenso. Afecta significativamente su postura, respiración o estado de ánimo. Requiere atención o alivio pronto.",
+        color: "bg-orange-500",
+        bgPanel: "bg-orange-50 border-orange-300"
+      },
+      5: {
+        title: "Nivel 5: Dolor muy fuerte / Insoportable",
+        description: "El paciente padece el peor dolor imaginable. Se encuentra severamente angustiado, llorando o incapacitado por completo.",
+        color: "bg-rose-500",
+        bgPanel: "bg-rose-50 border-rose-300"
+      }
+    };
+
+    function selectPain(level) {
+      for (let i = 0; i <= 5; i++) {
+        const card = document.getElementById(`card-${i}`);
+        card.classList.remove('card-selected', 'ring-4', 'ring-offset-2', 'ring-sky-400', 'ring-emerald-400', 'ring-lime-400', 'ring-yellow-400', 'ring-orange-400', 'ring-rose-400');
+      }
+
+      const selectedCard = document.getElementById(`card-${level}`);
+      selectedCard.classList.add('card-selected');
+
+      const info = data[level];
+      const panel = document.getElementById('evaluation-panel');
+      const dot = document.getElementById('status-dot');
+      const title = document.getElementById('eval-title');
+      const desc = document.getElementById('eval-description');
+
+      panel.className = `border-2 rounded-3xl p-8 transition-all duration-300 flex-grow flex flex-col justify-center ${info.bgPanel}`;
+      dot.className = `inline-block w-5 h-5 rounded-full ${info.color}`;
+      title.textContent = info.title;
+      desc.textContent = info.description;
+    }
+  </script>
+</body>
+</html>
